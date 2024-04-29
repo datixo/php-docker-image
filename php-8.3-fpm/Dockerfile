@@ -3,9 +3,6 @@ FROM php:8.3-fpm
 
 USER root
 
-# Composer
-COPY --from=composer/composer:2-bin /composer /usr/bin/composer
-
 # Libraries
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
@@ -15,7 +12,10 @@ RUN apt install -y libicu-dev # Intl Dependencies
 
 RUN sync
 
-RUN install-php-extensions gd intl pdo_pgsql gettext
+RUN install-php-extensions @composer gd intl pdo_pgsql gettext
+
+RUN mkdir -p /var/www/.composer/cache/vcs
+RUN chmod 0777 -R /var/www/.composer
 
 # Setup user
 ARG UID=1000
