@@ -1,5 +1,5 @@
 # Base Image
-FROM ghcr.io/datixo/php-8.3-fpm:latest
+FROM datixo/php-8.3-fpm:latest
 
 USER root
 
