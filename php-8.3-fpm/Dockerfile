@@ -7,10 +7,12 @@ USER root
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
 RUN apt update
-RUN apt install -y git unzip # Composer Dependencies
-RUN apt install -y libicu-dev # Intl Dependencies
 
-RUN sync
+
+# git, unzip - Composer Dependencies
+# libicu-dev - Intl
+# gettext - (bitbucket pipelines do not have it preinstalled)
+RUN apt install -y git unzip libicu-dev gettext
 
 RUN install-php-extensions @composer gd intl pdo_pgsql gettext
 
