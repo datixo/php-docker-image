@@ -1,28 +1,21 @@
 # PHP 8.3
-FROM php:8.3-fpm
+FROM php:8.3-fpm-alpine
 
 USER root
 
 # Libraries
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=composer/composer:2-bin /composer /usr/bin/
 
-RUN apt update
-
-
-# git, unzip - Composer Dependencies
-# libicu-dev - Intl
-# gettext - (bitbucket pipelines do not have it preinstalled)
-RUN apt install -y git unzip libicu-dev gettext
-
-RUN install-php-extensions @composer gd intl pdo_pgsql gettext
-
-RUN mkdir -p /var/www/.composer/cache/vcs
-RUN chmod 0777 -R /var/www/.composer
-
-# Setup user
+# User Args
 ARG UID=1000
 ARG GID=1000
 
-RUN usermod -u ${UID} www-data; groupmod -g ${GID} www-data
+RUN mkdir -p /var/www/.composer/cache/vcs && \
+    chown -R www-data.www-data /var/www/.composer/cache/vcs && \
+    apk add --no-cache --update shadow git unzip icu-dev && \
+    install-php-extensions gd intl pdo_pgsql && \
+    usermod -u ${UID} www-data && \
+    groupmod -g ${GID} www-data
 
 USER www-data
