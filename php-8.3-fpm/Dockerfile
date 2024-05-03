@@ -14,7 +14,7 @@ ARG GID=1000
 RUN mkdir -p /var/www/.composer/cache/vcs && \
     chown -R www-data.www-data /var/www/.composer/cache/vcs && \
     apk add --no-cache --update shadow git unzip icu-dev && \
-    install-php-extensions gd intl pdo_pgsql && \
+    install-php-extensions gd intl pdo_pgsql excimer && \
     usermod -u ${UID} www-data && \
     groupmod -g ${GID} www-data
 
