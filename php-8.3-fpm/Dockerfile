@@ -19,7 +19,8 @@ RUN mkdir -p /var/www/.composer/cache/vcs \
     && chmod 0777 /sbin/su-exec \
     && install-php-extensions gd intl pdo_pgsql bcmath excimer \
     && usermod -u ${UID} www-data \
-    && groupmod -g ${GID} www-data
+    && groupmod -g ${GID} www-data \
+    && touch /etc/crontab
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD crontab -u www-data /var/www/html/dev/crontab && (crond -f -d 0 & su-exec var-www:var-www php-fpm -F -R)
+CMD crontab -u www-data /etc/crontab && (crond -f -d 0 & su-exec var-www:var-www php-fpm -F -R)
