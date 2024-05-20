@@ -20,7 +20,8 @@ RUN mkdir -p /var/www/.composer/cache/vcs \
     && install-php-extensions gd intl pdo_pgsql bcmath excimer \
     && usermod -u ${UID} www-data \
     && groupmod -g ${GID} www-data \
-    && touch /etc/crontab
+    && touch /etc/crontab \
+    && chmod 0777 -R /tmp
 
 # Bash as a default shell...
 RUN sed -i 's@root:x:0:0:root:/root:/bin/ash@root:x:0:0:root:/root:/bin/bash@g' /etc/passwd
