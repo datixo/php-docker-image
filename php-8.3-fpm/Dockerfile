@@ -15,7 +15,8 @@ ARG UID=1000
 ARG GID=1000
 
 # System Packages
-RUN apk add --no-cache --update su-exec tini busybox-suid shadow git unzip icu-dev gettext-envsubst bash
+RUN apk update && apk --update-cache upgrade \
+&& apk add --update-cache --no-cache --update su-exec tini busybox-suid shadow git unzip icu-dev gettext-envsubst bash curl
 
 # Bash as a default shell...
 RUN sed -i 's@root:x:0:0:root:/root:/bin/ash@root:x:0:0:root:/root:/bin/bash@g' /etc/passwd
