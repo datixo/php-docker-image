@@ -24,7 +24,7 @@ jobs:
             -   name: Build and Publish Image
                 uses: docker/build-push-action@v5
                 with:
-                    context: php-8.3-fpm
+                    file: php-8.3-fpm/Dockerfile
                     platforms: linux/amd64,linux/arm64
                     push: true
                     # noinspection SpellCheckingInspection
@@ -50,7 +50,7 @@ jobs:
             -   name: Build and Publish Image
                 uses: docker/build-push-action@v5
                 with:
-                    context: php-8.3-xdebug-fpm
+                    file: php-8.3-xdebug-fpm/Dockerfile
                     platforms: linux/amd64,linux/arm64
                     push: true
                     # noinspection SpellCheckingInspection
