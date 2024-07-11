@@ -31,11 +31,13 @@ RUN mkdir -p /var/www/.composer/cache/vcs \
     && chmod 0777 -R /var/log/cron \
     && chown -R www-data.www-data /var/www/.composer/cache/vcs  \
     && chmod 0777 /sbin/su-exec \
-    && install-php-extensions gd intl pdo pdo_pgsql pdo_mysql pdo_sqlsrv pdo_odbc bcmath excimer \
+    && install-php-extensions gd intl pdo pdo_pgsql pdo_mysql pdo_sqlsrv pdo_odbc bcmath excimer opcache \
     && usermod -u ${UID} www-data \
     && groupmod -g ${GID} www-data \
     && touch /etc/crontab \
     && chmod 0777 -R /tmp
+
+COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD crontab -u www-data /etc/crontab && (crond -f -d 0 & su-exec var-www:var-www php-fpm -F -R)
