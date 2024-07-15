@@ -21,6 +21,9 @@ RUN apk update && apk --update-cache upgrade \
 # Bash as a default shell...
 RUN sed -i 's@root:x:0:0:root:/root:/bin/ash@root:x:0:0:root:/root:/bin/bash@g' /etc/passwd
 
+# Del user `21` (possible mac error)
+RUN deluser --remove-home ftp
+
 # ODBC Driver
 COPY --chown=${UID}:${GID} --chmod=0777 ./install-odbc-driver.sh .
 RUN /bin/bash install-odbc-driver.sh
