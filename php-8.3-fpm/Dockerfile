@@ -2,7 +2,7 @@
 FROM php:8.3-fpm-alpine
 
 # Memory Limit:
-RUN echo 'memory_limit = 1024M' >> /usr/local/etc/php/conf.d/docker-php-memory-limit.ini;
+RUN echo 'memory_limit = 4096M' >> /usr/local/etc/php/conf.d/docker-php-memory-limit.ini;
 
 USER root
 
