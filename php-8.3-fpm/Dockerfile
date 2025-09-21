@@ -32,7 +32,7 @@ RUN rm ./install-odbc-driver.sh
 RUN mkdir -p /var/www/.composer/cache/vcs \
     && mkdir -p /var/log/cron \
     && chmod 0777 -R /var/log/cron \
-    && chown -R www-data.www-data /var/www/.composer/cache/vcs  \
+    && chown -R www-data:www-data /var/www/.composer/cache/vcs  \
     && chmod 0777 /sbin/su-exec \
     && install-php-extensions gd intl pdo pdo_pgsql pdo_mysql pdo_sqlsrv pdo_odbc bcmath excimer opcache redis soap \
     && usermod -u ${UID} www-data \
